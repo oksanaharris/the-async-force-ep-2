@@ -9,8 +9,14 @@ function createXHR(method, url, cb){
   var newRequest = new XMLHttpRequest ();
 
   newRequest.addEventListener('load', cb);
+  newRequest.addEventListener('error', displayError);
   newRequest.open(method, url);
   newRequest.send();
+}
+
+function displayError(){
+  contentDivEl.innerHTML = 'In galaxy far, far away, something went terribly wrong.';
+  throw new Error ('something went wrong');
 }
 
 function getData(){
@@ -46,6 +52,11 @@ function getData(){
   }
 
   function populatePerson() {
+    if (this.status !== 200){
+      contentDivEl.innerHTML = 'In galaxy far, far away, something went terribly wrong.';
+      throw new Error ('something went wrong');
+    }
+
     contentDivEl.innerHTML = '';
 
     var personObj = JSON.parse(this.responseText);
@@ -71,6 +82,11 @@ function getData(){
   }
 
   function populatePlanet() {
+    if (this.status !== 200){
+      contentDivEl.innerHTML = 'In galaxy far, far away, something went terribly wrong.';
+      throw new Error ('something went wrong');
+    }
+
     contentDivEl.innerHTML = '';
 
     var planetObj = JSON.parse(this.responseText);
@@ -99,6 +115,11 @@ function getData(){
   }
 
   function populateStarship() {
+    if (this.status !== 200){
+      contentDivEl.innerHTML = 'In galaxy far, far away, something went terribly wrong.';
+      throw new Error ('something went wrong');
+    }
+
     contentDivEl.innerHTML = '';
 
     var starshipObj = JSON.parse(this.responseText);

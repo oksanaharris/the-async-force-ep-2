@@ -35,6 +35,16 @@ function getData(){
       break;
   }
 
+  function populateFilmList(parentUl){
+    return function (){
+      var filmObj = JSON.parse(this.responseText);
+
+      var filmLiEl = document.createElement('li');
+      filmLiEl.innerHTML = filmObj.title;
+      parentUl.appendChild(filmLiEl);
+    }
+  }
+
   function populatePerson() {
     contentDivEl.innerHTML = '';
 
@@ -52,7 +62,6 @@ function getData(){
 
     function populateSpecies (){
       var speciesObj = JSON.parse(this.responseText);
-      console.log('SPECIES- YAY!', speciesObj);
 
       var speciesEl = document.createElement('p');
       speciesEl.innerHTML = 'Species - ' + speciesObj.name;
@@ -85,15 +94,7 @@ function getData(){
     contentDivEl.appendChild(filmsListEl);
 
     filmsArr.forEach((filmUrl) => {
-      var filmRequest = createXHR("GET", filmUrl, populateFilmList);
-
-      function populateFilmList(){
-        var filmObj = JSON.parse(this.responseText);
-
-        var filmLiEl = document.createElement('li');
-        filmLiEl.innerHTML = filmObj.title;
-        filmsListEl.appendChild(filmLiEl);
-      }
+      var filmRequest = createXHR("GET", filmUrl, populateFilmList(filmsListEl));
     });
   }
 
@@ -121,15 +122,7 @@ function getData(){
     contentDivEl.appendChild(filmsListEl);
 
     filmsArr.forEach((filmUrl) => {
-      var filmRequest = createXHR("GET", filmUrl, populateFilmList);
-
-      function populateFilmList(){
-        var filmObj = JSON.parse(this.responseText);
-
-        var filmLiEl = document.createElement('li');
-        filmLiEl.innerHTML = filmObj.title;
-        filmsListEl.appendChild(filmLiEl);
-      }
+      var filmRequest = createXHR("GET", filmUrl, populateFilmList(filmsListEl));
     });
   }
 }
